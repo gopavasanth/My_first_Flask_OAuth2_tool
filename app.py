@@ -29,11 +29,11 @@ toolwatch = oauth.create_client("toolwatch")
 # Define the login route
 @app.route("/login")
 def login():
-    redirect_uri = url_for("authorize", _external=True)
-    return toolwatch.authorize_redirect(redirect_uri)
+    return toolwatch.authorize_redirect()
 
 # Define the callback route
-@app.route("/api/auth/mediawiki/callback")
+redirect_url = "/api/auth/mediawiki/callback" # Should be the same as the callback url given in the Oauth consumer registration
+@app.route(redirect_url)
 def authorize():
     token = toolwatch.authorize_access_token()
     if token:
